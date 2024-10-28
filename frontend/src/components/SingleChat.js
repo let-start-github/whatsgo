@@ -1,6 +1,7 @@
 import { FormControl } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Box, Text } from "@chakra-ui/layout";
+import { Avatar } from "@chakra-ui/avatar";
 import "./styles.css";
 import { IconButton, Spinner, useToast } from "@chakra-ui/react";
 import { getSender, getSenderFull } from "../config/ChatLogics";
@@ -180,7 +181,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {messages &&
               (!selectedChat.isGroupChat ? (
                 <>
+                <Avatar
+                  
+                  size="sm"
+                  cursor="pointer"
+                  name={getSenderFull(user, selectedChat.users).name}
+                  src={getSenderFull(user, selectedChat.users).pic}
+                />
+                <span
+                style={{
+                  textTransform:"capitalize"
+                }}>
                   {getSender(user, selectedChat.users)}
+                  </span>
                   <ProfileModal
                     user={getSenderFull(user, selectedChat.users)}
                   />
@@ -200,8 +213,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             d="flex"
             flexDir="column"
             justifyContent="flex-end"
-            p={3}
-            bg="#E8E8E8"
+           p={3}
+           bg="linear-gradient(#004e92,#000428)"
             w="100%"
             h="100%"
             borderRadius="lg"
@@ -246,6 +259,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 value={newMessage}
                 onChange={typingHandler}
               />
+              
             </FormControl>
           </Box>
         </>

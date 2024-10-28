@@ -1,9 +1,10 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Stack, Text } from "@chakra-ui/layout";
+import { Avatar } from "@chakra-ui/avatar";
+import { Box, Flex, Stack, Text } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getSender } from "../config/ChatLogics";
+import { getSender, getSenderFull } from "../config/ChatLogics";
 import ChatLoading from "./ChatLoading";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
@@ -65,8 +66,9 @@ const MyChats = ({ fetchAgain }) => {
         w="100%"
         justifyContent="space-between"
         alignItems="center"
+        
       >
-        My Chats
+        Chats
         <GroupChatModal>
           <Button
             d="flex"
@@ -81,7 +83,7 @@ const MyChats = ({ fetchAgain }) => {
         d="flex"
         flexDir="column"
         p={3}
-        bg="#F8F8F8"
+        bg="linear-gradient(45deg #00000,#434343)"
         w="100%"
         h="100%"
         borderRadius="lg"
@@ -97,9 +99,22 @@ const MyChats = ({ fetchAgain }) => {
                 color={selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
+                w="100%"
+                d="flex"
+                alignItems="center"
                 borderRadius="lg"
                 key={chat._id}
               >
+              <Box>
+                <Avatar
+                  mr={2}
+                  size="sm"
+                  cursor="pointer"
+                  name={getSenderFull(loggedUser, chat.users).name}
+                  src={getSenderFull(loggedUser, chat.users).pic}
+                />
+                </Box>
+                <Box>
                 <Text>
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
@@ -113,6 +128,7 @@ const MyChats = ({ fetchAgain }) => {
                       : chat.latestMessage.content}
                   </Text>
                 )}
+                </Box>
               </Box>
             ))}
           </Stack>
